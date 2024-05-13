@@ -48,6 +48,15 @@ function mapper(rules) {
 
     rules.forEach((rule) => {
       const [originalField, newField, transformFunc] = rule;
+
+      if (!item.hasOwnProperty(originalField)) {
+        throw new Error(`Field ${originalField} not found in item`);
+      }
+
+      if (transformFunc && typeof transformFunc !== 'function') {
+        throw new Error('Transform function must be a function');
+      }
+
       const originalValue = item[originalField];
 
       mappedItem[newField] = transformFunc

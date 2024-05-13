@@ -7,7 +7,7 @@ div.appendChild(p);
 function nodeChildCount(node, deep = Infinity) {
   let count = 0;
 
-  function countChildren(node, currentDepth) {
+  function countChildren(node, currentDepth = 1) {
     if (currentDepth <= deep) {
       count += node.childNodes.length;
       for (let i = 0; i < node.childNodes.length; i++) {
@@ -16,7 +16,7 @@ function nodeChildCount(node, deep = Infinity) {
     }
   }
 
-  countChildren(node, 1);
+  countChildren(node);
   return count;
 }
 

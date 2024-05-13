@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  sku String @unique @id
+  title String
+  categories ProductsCategory[]
+  stocks Stock[]
+  
+}
+
+model Category {
+  slug String @unique @id
+  title String
+  products ProductsCategory[]
+}
+
+model Warehouse {
+  uuid String @id @default(uuid())
+  title String
+  stocks Stock[]
+}
+
+model ProductsCategory {
+  id Int @id @default(autoincrement())
+  product    Product  @relation(fields: [productId], references: [sku])
+  productId  String
+  category    Category  @relation(fields: [categoryId], references: [slug])
+  categoryId  String
+}
+
+model Stock {
+  id         Int      @id @default(autoincrement())
+  quantity   Int      @default(0)
+  warehouse  Warehouse @relation(fields: [warehouseId], references: [uuid])
+  warehouseId String
+  product    Product  @relation(fields: [productId], references: [sku])
+  productId  String
+  
+}

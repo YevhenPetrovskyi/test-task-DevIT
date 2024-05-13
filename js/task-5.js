@@ -16,9 +16,9 @@ function reliableMultiply(a, b) {
     return primitiveMultiply(a, b);
   } catch (e) {
     if (e instanceof NotificationException) {
-      //повторять обчислення
+      return reliableMultiply(a, b);
     } else if (e instanceof ErrorException) {
-      return null;
+      throw e;
     }
   }
 }
